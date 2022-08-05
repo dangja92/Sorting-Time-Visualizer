@@ -1,15 +1,7 @@
-# Author: James Dang
-# Date: 2/22/2022
-# Description: Generate a graph comparing sorting time between bubble sort and insertion sort for
-# a number of integers of differing ranges between 1000 and 10000
-# github: dangja92
-
 from matplotlib import pyplot
 import time
 import random
 from functools import wraps
-from a6_include import (DynamicArray, HashEntry,
-                        hash_function_1, hash_function_2)
 from hash_map_sc import *
 from hash_map_oa import *
 

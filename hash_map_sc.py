@@ -1,11 +1,3 @@
-# Name: James Dang
-# OSU Email: dangja@oregonstate.edu
-# Course: CS261 - Data Structures
-# Assignment: 6
-# Due Date: 06/03/2022
-# Description: Implementing a HashMap Data Structure using Separate Chaining
-
-
 from a6_include import (DynamicArray, LinkedList,
                         hash_function_1, hash_function_2)
 

@@ -1,11 +1,3 @@
-# Name: James Dang
-# OSU Email: dangja@oregonstate.edu
-# Course: CS261 - Data Structures
-# Assignment: 6
-# Due Date: 06/03/2022
-# Description: Implementing a HashMap Data Structure using Open Addressing
-
-
 from a6_include import (DynamicArray, HashEntry,
                         hash_function_1, hash_function_2)
 
@@ -53,7 +45,7 @@ class HashMap:
 
     def put(self, key: str, value: object) -> None:
         """
-        TODO: Write this implementation
+        Hash the key into the array and insert the value at the index hashed from key
         """
         if self.table_load() >= 0.5:
             self.resize_table(self._capacity * 2)
