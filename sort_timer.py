@@ -2,8 +2,6 @@ from matplotlib import pyplot
 import time
 import random
 from functools import wraps
-from hash_map_sc import *
-from hash_map_oa import *
 
 
 def sort_timer(func):
@@ -25,99 +23,74 @@ def sort_timer(func):
 
 
 @sort_timer
-def find_mode(da: DynamicArray) -> (DynamicArray, int):
+def bubble_sort(array):
     """
-    Returns a tuple containing a DynamicArray containing the mode value(s) within "da" DynamicArray, and an integer
-    that represents the highest frequency they appear.
-    The input array "da" will contain at least one element, and all values stored in the array will be string.
+    Sort a list in ascending order using Bubble Sort
+    :param array: a list of integers
+    :return: a sorted list in ascending order
     """
-    hash_map = HashMap(len(da) // 3, hash_function_1)
-    mode_val = DynamicArray()
-
-    for i in range(len(da)):
-        if hash_map.contains_key(da[i]):
-            hash_map.put(da[i], hash_map.get(da[i]) + 1)
-        else:
-            hash_map.put(da[i], 1)
-
-    max_freq = 0
-    keys_list = hash_map.get_keys()
-
-    for i in range(keys_list.length()):
-        if hash_map.get(keys_list[i]) > max_freq:
-            max_freq = hash_map.get(keys_list[i])
-
-    for i in range(keys_list.length()):
-        if hash_map.get(keys_list[i]) == max_freq:
-            mode_val.append(keys_list[i])
-
-    return mode_val, max_freq
-
-
-def find_mode_timer(func1=find_mode):
-    """
-    Displays the time it takes to find the mode within a list of randomly generated integers between
-    1 and 1000, with the sample sizes between 10,000 to 100,000 numbers for each data set.
-    Using PyPlot, plot the number of integers on the X-axis and the time it takes to find the mode
-    within the data set on the Y-axis, and displays the plot to the user
-    @param: func1: default is the find_mode function
-    """
-    # create two lists that hold the sorting time for bubble sort vs insertion sort
-    sort_time = []
-    int_list_size = [num*1000 for num in range(1, 11)]  # holds the lists' size from 1000 to 10000
-
-    # generate two identical lists of integers between range [1, 10000]
-    for num in range(1, 11):
-        # create a list of size equal to num * 1000
-        list_1 = [random.randrange(1, 1000) for size in range(num*10000)]
-        # call decorated bubble_sort and insertion_sort
-        # to get sorting time and append time to each function's sort_time list
-        sort_time.append(func1(list_1))
-
-    # plot bubble sort's respective sorting times to the integers' lists size
-    # x-axis = number of integers sorted, from 1000 to 10000
-    # y-axis = sorting time in respect to integers' lists size
-    pyplot.plot(int_list_size, sort_time, 'ro--', linewidth=2, label='Find Mode Big O')
-    # plot insertion sort's respective sorting times to the integers' lists size
-    pyplot.xlabel("Number of Integers")
-    pyplot.ylabel("Sorting Time(seconds)")
-    pyplot.legend(loc='upper left')
-    pyplot.show()
-    return
+    for pass_num in range(len(array) - 1):
+        for index in range(len(array) - 1 - pass_num):
+            if array[index] > array[index + 1]:
+                temp = array[index]
+                array[index] = array[index + 1]
+                array[index + 1] = temp
 
 
 @sort_timer
-def bubble_sort(a_list):
+def insertion_sort(array):
     """
-    sort a list in ascending order using bubble sort
-    :param a_list: a list
+    Sort a list in ascending order using Insertion Sort
+    :param array: a list of integers
     :return: a sorted list in ascending order
     """
-    for pass_num in range(len(a_list) - 1):
-        for index in range(len(a_list) - 1 - pass_num):
-            if a_list[index] > a_list[index + 1]:
-                temp = a_list[index]
-                a_list[index] = a_list[index + 1]
-                a_list[index + 1] = temp
-
-
-@sort_timer
-def insertion_sort(a_list):
-    """
-    sort a list in ascending order using insertion sort
-    :param a_list: a list
-    :return: a sorted list in ascending order
-    """
-    for index in range(1, len(a_list)):
-        value = a_list[index]
+    for index in range(1, len(array)):
+        value = array[index]
         pos = index - 1
-        while pos >= 0 and a_list[pos] > value:
-            a_list[pos + 1] = a_list[pos]
+        while pos >= 0 and array[pos] > value:
+            array[pos + 1] = array[pos]
             pos -= 1
-        a_list[pos + 1] = value
+        array[pos + 1] = value
 
 
-def compare_sorts(func1=bubble_sort, func2=insertion_sort):
+@sort_timer
+def quick_sort(array, start, end):
+    """
+    Sort a list in ascending order using Quick Sort
+    :param array: A list of integers
+    :param start: starting index
+    :param end: ending index
+    :return: a sorted list in ascending order
+    """
+
+    if start >= end:
+        return
+
+    def partition(array, start, end):
+        """
+        Return a partition index based on a pivot element
+        :param array: list of integers
+        :param start: starting index
+        :param end: ending index
+        :return: the partition index
+        """
+
+        pivot = array[end]
+        p_index = start
+        for i in range(start, end):
+            if array[i] <= pivot:
+                array[i], array[p_index] = array[p_index], array[i]
+                p_index += 1
+        array[p_index], array[end] = array[end], array[p_index]
+        return p_index
+
+    partition_index = partition(array, start, end)
+    quick_sort(array, start, partition_index - 1)
+    quick_sort(array, partition_index + 1, end)
+
+
+
+def compare_sort_time(func1=bubble_sort, func2=insertion_sort, func3=quick_sort):
     """
     compares the sorting time between two sorting functions for the same list of numbers
     ranging between 1000 to 10000 integers. The integers' range is 1 <= int <= 10000
@@ -129,24 +102,30 @@ def compare_sorts(func1=bubble_sort, func2=insertion_sort):
     # create two lists that hold the sorting time for bubble sort vs insertion sort
     bubble_sort_time = []
     insertion_sort_time = []
-    int_list_size = [num*1000 for num in range(1, 11)]  # holds the lists' size from 1000 to 10000
+    quick_sort_time = []
+    int_list_size = [num*1000 for num in range(1, 21)]  # holds the lists' size from 1000 to 20000
 
     # generate two identical lists of integers between range [1, 10000]
-    for num in range(1, 11):
+    for num in range(1, 21):
         # create a list of size equal to num * 1000
         list_1 = [random.randrange(1, 10001) for size in range(num*1000)]
         list_2 = list(list_1)
+        list_3 = list(list_1)
+
         # call decorated bubble_sort and insertion_sort
         # to get sorting time and append time to each function's sort_time list
         bubble_sort_time.append(func1(list_1))
         insertion_sort_time.append(func2(list_2))
+        quick_sort_time.append(func3(list_3, start=0, end=len(list_3)-1))
 
     # plot bubble sort's respective sorting times to the integers' lists size
     # x-axis = number of integers sorted, from 1000 to 10000
     # y-axis = sorting time in respect to integers' lists size
-    pyplot.plot(int_list_size, bubble_sort_time, 'ro--', linewidth=2, label='Bubble Sort')
+    pyplot.plot(int_list_size, bubble_sort_time, color='red', marker='o', linestyle='dashed', linewidth=2, label='Bubble Sort')
     # plot insertion sort's respective sorting times to the integers' lists size
-    pyplot.plot(int_list_size, insertion_sort_time, 'go--', linewidth=2, label='Insertion Sort')
+    pyplot.plot(int_list_size, insertion_sort_time, color='green', marker='o', linestyle='dashed', linewidth=2, label='Insertion Sort')
+    # plot quick sort's respective sorting times to the integers' lists size
+    pyplot.plot(int_list_size, quick_sort_time, color='yellow', marker='o', linestyle='dashed', linewidth=2, label='Quick Sort')
     pyplot.xlabel("Number of Integers Sorted")
     pyplot.ylabel("Sorting Time(seconds)")
     pyplot.legend(loc='upper left')
@@ -155,5 +134,4 @@ def compare_sorts(func1=bubble_sort, func2=insertion_sort):
 
 
 if __name__ == '__main__':
-    # compare_sorts(func1=bubble_sort, func2=insertion_sort)
-    find_mode_timer(func1=find_mode)
+    compare_sort_time(func1=bubble_sort, func2=insertion_sort, func3=quick_sort)
