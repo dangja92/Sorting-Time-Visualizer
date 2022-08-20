@@ -145,12 +145,12 @@ def compare_sort_time(func1=bubble_sort, func2=insertion_sort, func3=quick_sort,
     insertion_sort_time = []
     quick_sort_time = []
     merge_sort_time = []
-    int_list_size = [num*1000 for num in range(1, 21)]  # holds the lists' size from 1000 to 20000
+    int_list_size = [num*1000 for num in range(1, 1001)]  # holds the lists' size from 1,000 to 1,000,000
 
-    # generate four identical lists of integers between range [1, 10000]
-    for num in range(1, 21):
+    # generate four identical lists of integers between range [1, 1,000,000]
+    for num in range(1, 1001):
         # create a list of size equal to num * 1000
-        list_1 = [random.randrange(1, 10001) for size in range(num*1000)]
+        list_1 = [random.randrange(1, 1000001) for size in range(num*1000)]
         list_2 = list(list_1)
         list_3 = list(list_1)
         list_4 = list(list_1)
