@@ -23,6 +23,6 @@ python3 sort_timer.py
 
 Once run, you should see a graph like this.
 
-[Sorting-Time-Graph](https://github.com/dangja92/Sorting-Time-Visualizer/blob/assets/sorting_time_graph.jpg)
+![Sorting-Time-Graph](https://github.com/dangja92/Sorting-Time-Visualizer/blob/assets/sorting_time_graph.jpg?raw=true)
 
 Alternatively, you can use whichever editor (e.g. PyCharm, VSCode, etc....) to compile the sort_timer.py file instead. Happy coding!
