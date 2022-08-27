@@ -10,7 +10,7 @@ Currently, this project supports the following sorting algorithms: Bubble Sort, 
 If you would like to compare using your own data sets or with different sorting algorithms, simply clone the repository and insert your data sets / algorithms into the sort_timer.py file.
 
 
-**To Get Started**
+##**To Get Started**
 
 Clone the repository to your directory. If you're using unix or Windows command line, simply navigate to your directory as follow:
 ```
@@ -20,5 +20,9 @@ Then, run the following command:
 ```
 python3 sort_timer.py
 ```
+
+Once run, you should see a graph like this.
+
+[Sorting-Time-Graph](https://github.com/dangja92/Sorting-Time-Visualizer/blob/assets/sorting_time_graph.jpg)
 
 Alternatively, you can use whichever editor (e.g. PyCharm, VSCode, etc....) to compile the sort_timer.py file instead. Happy coding!
